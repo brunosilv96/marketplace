@@ -1,4 +1,4 @@
-import type { UserDTO } from "../../user/UserDTO";
+import type { UserDTO } from "../../domain/user/UserDTO";
 
 export class UserUseCase implements UserDTO {
     id;
