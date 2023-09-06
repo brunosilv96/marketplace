@@ -1,6 +1,21 @@
 import { Request, Response } from "express";
+import { send } from "process";
 
-export class ExpressAdapter {
+export interface Req {
+    headers: any | {};
+    body: any | {};
+    params: any | {};
+    query: any | {};
+}
+
+export interface ExpressAdapterProps {
+    req: Request;
+    res: Response;
+    HttpRequest(): Req;
+    HttpResponse(status: number, data: any): void;
+}
+
+export class ExpressAdapter implements ExpressAdapterProps {
     req;
     res;
 
@@ -9,7 +24,7 @@ export class ExpressAdapter {
         this.res = res;
     }
 
-    HttpRequest() {
+    HttpRequest(): Req {
         return {
             headers: this.req.header || {},
             body: this.req.body || {},
