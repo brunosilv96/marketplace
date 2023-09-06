@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Request, Response } from "express";
 
 import { UserController } from "../../presentation/controllers/user-controller";
-import { ExpressAdapter } from "../adapters/ExpressAdapter";
+import { ExpressAdapter } from "../../adapters/ExpressAdapter";
 
 // Import controllers
 const userRoutes: Router = Router();

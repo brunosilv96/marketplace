@@ -11,6 +11,4 @@ app.use(express.static("public"));
 // Apply routes
 app.use("/api/users", userRoutes);
 
-app.listen(5000, () => {
-    console.log("Express online na porta 5000");
-});
+export { app };
