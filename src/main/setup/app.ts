@@ -1,7 +1,7 @@
 import express from "express";
 
 // Import routes
-import userRoutes from "./routes/user-routes";
+import userRoutes from "../routes/user-routes";
 
 // Config to Express
 const app = express();

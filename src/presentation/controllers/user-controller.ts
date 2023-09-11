@@ -1,25 +1,19 @@
-import { CreateUser } from "../../domain/use-cases/create-user";
-import { ExpressAdapter } from "../../adapters/ExpressAdapter";
+import { CreateUserUseCase } from "../../domain/use-cases/create-user";
+import { Request, Response } from "express";
+export class CreateUserController {
+    private createUserUseCase;
 
-export class UserController {
-    adapter;
-
-    constructor(adapter: ExpressAdapter) {
-        this.adapter = adapter;
+    constructor(createUserUseCase: CreateUserUseCase) {
+        this.createUserUseCase = createUserUseCase;
     }
 
-    createUser() {
+    async createUser(req: Request, res: Response) {
         try {
-            const { id, name, age } = this.adapter.HttpRequest().body;
-
-            const newUser = new CreateUser().run({ name, age }, id);
-
-            console.log("Usuário criado no Controller");
-            console.log(newUser);
-
-            this.adapter.HttpResponse(201, newUser);
+            const { id, name, age } = req.body;
+            const newUser = await this.createUserUseCase.run({ id, name, age });
+            return res.status(200).json(newUser);
         } catch (e: any) {
-            return this.adapter.HttpResponse(422, e.message);
+            return res.status(422).json(e.message);
         }
     }
 }

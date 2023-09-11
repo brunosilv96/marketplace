@@ -1,16 +1,6 @@
-import { User } from "../entities/user";
-
-interface ICreateUserRequest {
-    id: string;
-    name: string;
-    age: number;
-    msg?: string;
-}
-
-type CreateUserResponse = User;
-
-export class CreateUser {
-    run({ name, age }: Omit<ICreateUserRequest, "id">, id?: string): CreateUserResponse | string {
+import { User, UserDTO } from "../entities/user";
+export class CreateUserUseCase {
+    run({ id, name, age }: UserDTO): User | Error {
         if (!id || typeof id !== "string") {
             throw new Error("O ID não foi informado ou não é do tipo string");
         }
