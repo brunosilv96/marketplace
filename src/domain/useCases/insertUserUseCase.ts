@@ -1,18 +1,19 @@
 import { User } from "../entities/User";
+import { IInsertUserUseCase } from "../contracts/IInsertUserUseCase";
 
-export class InsertUserCase {
+export class InsertUserCase implements IInsertUserUseCase {
     exec({ id, name, job, age }: User) {
-        if (id === "") {
-            throw new Error("O ID do usuário não foi informado");
+        if (!id || typeof id !== "string") {
+            throw new Error("ID não informado ou diferente de string");
         }
-        if (name === "") {
-            throw new Error("O name do usuário não foi informado");
+        if (!name || typeof name !== "string") {
+            throw new Error("Nome não informado ou diferente de string");
         }
         if (name === "Bruno") {
             throw new Error("O seu nome não pode ser Bruno");
         }
-        if (job === "") {
-            throw new Error("O job do usuário não foi informado");
+        if (!job || typeof job !== "string") {
+            throw new Error("JOB não informado ou diferente de string");
         }
         if (!age || typeof age !== "number") {
             throw new Error("O job do usuário não foi informado");

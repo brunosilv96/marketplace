@@ -1,6 +1,5 @@
 import { HttpRequest, IController } from "../contracts/IController";
 import { Request, Response } from "express";
-
 export class ExpressAdapter {
     static acople(controller: IController) {
         return async (request: Request, response: Response) => {
@@ -17,3 +16,20 @@ export class ExpressAdapter {
         };
     }
 }
+
+// export class ExpressAdapter {
+//     acople(controller: IController) {
+//         return async (req: Request, res: Response) => {
+//             const newRequest: HttpRequest = {
+//                 headers: req.headers || {},
+//                 body: req.body || {},
+//                 params: req.params || {},
+//                 query: req.query || {},
+//             };
+
+//             const { code, data } = await controller.run(newRequest);
+
+//             res.status(code).json(data);
+//         };
+//     }
+// }
