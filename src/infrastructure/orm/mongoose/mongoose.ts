@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 async function main() {
-    await mongoose.connect("mongodb://localhost:27017/marketplace", {
-        user: "root",
-        pass: "root",
-    });
+    await mongoose.connect("mongodb://localhost:27017/marketplace");
     console.log("MONGO:27017");
 }
 
