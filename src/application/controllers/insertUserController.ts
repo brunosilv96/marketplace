@@ -1,27 +1,27 @@
 import { IInsertUserUseCase } from "../../domain/contracts/IInsertUserUseCase";
-import { ICreateUserRepository } from "../../infrastructure/contracts/user/IUserRepository";
+import { IUserRepository } from "../../infrastructure/contracts/user/IUserRepository";
 import { HttpRequest, HttpResponse, IController } from "../contracts/IController";
 
 export class InsertUserController implements IController {
     userUseCase: IInsertUserUseCase;
-    userRepository: ICreateUserRepository;
+    userRepository: IUserRepository;
 
-    constructor(insertUserCase: IInsertUserUseCase, userRepository: ICreateUserRepository) {
+    constructor(insertUserCase: IInsertUserUseCase, insertUserRepository: IUserRepository) {
         this.userUseCase = insertUserCase;
-        this.userRepository = userRepository;
+        this.userRepository = insertUserRepository;
     }
 
     async run({ body }: HttpRequest): Promise<HttpResponse> {
         try {
-            const { id, name, job, age } = body;
+            const { name, email, password, phone } = body;
 
-            const newUser = await this.userUseCase.exec({ id, name, job, age });
+            const newUser = this.userUseCase.exec({ name, email, password, phone });
 
-            await this.userRepository.execute(newUser);
+            const newUserDb = await this.userRepository.insert(newUser);
 
             return {
                 code: 201,
-                data: newUser,
+                data: newUserDb,
             };
         } catch (error: any) {
             return {

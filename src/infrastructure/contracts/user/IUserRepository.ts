@@ -1,5 +1,4 @@
-import { User } from "../../../domain/entities/User";
-
-export interface ICreateUserRepository {
-    execute(user: User): Promise<void>;
+import { User as UserEntity } from "../../../domain/entities/User";
+export interface IUserRepository {
+    insert(user: UserEntity): Promise<any>;
 }
