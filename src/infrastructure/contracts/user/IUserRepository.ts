@@ -1,4 +1,5 @@
 import { User as UserEntity } from "../../../domain/entities/User";
 export interface IUserRepository {
-    insert(user: UserEntity): Promise<any>;
+    insertUser(user: UserEntity): Promise<any>;
+    getUserByEmail(email: string): Promise<any>;
 }
