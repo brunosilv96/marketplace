@@ -2,6 +2,7 @@ import { FindUserUseCase } from "../../domain/useCases/findUserUseCase";
 import { UserRepository } from "../../infrastructure/repositories/UserRepositoryMongo";
 import { FindUserController } from "../controllers/findUserController";
 
+// Coment line
 const userRepository = new UserRepository();
 const findUserUseCase = new FindUserUseCase(userRepository);
 const findUserFactory = new FindUserController(findUserUseCase);
