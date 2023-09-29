@@ -22,4 +22,13 @@ export class UserRepository implements IUserRepository {
             throw Error(error);
         }
     }
+
+    async findAllUsers(): Promise<any> {
+        try {
+            const users = await User.find();
+            return users;
+        } catch (error: any) {
+            throw Error(error);
+        }
+    }
 }
