@@ -1,5 +1,5 @@
 import { User } from "../entities/User";
 
 export interface IInsertUserUseCase {
-    exec({ id, name, job, age }: User): User;
+    exec({ name, email, password, phone }: User): Promise<User>;
 }

@@ -1,8 +1,15 @@
 import { User } from "../entities/User";
 import { IInsertUserUseCase } from "../contracts/IInsertUserUseCase";
+import { IUserRepository } from "../../infrastructure/contracts/user/IUserRepository";
 
 export class InsertUserCase implements IInsertUserUseCase {
-    exec({ name, email, password, phone }: User) {
+    userRepository: IUserRepository;
+
+    constructor(userRepo: IUserRepository) {
+        this.userRepository = userRepo;
+    }
+
+    async exec({ name, email, password, phone }: User) {
         if (!name || typeof name !== "string") {
             throw new Error("Nome não informado ou diferente de string");
         }
@@ -19,6 +26,17 @@ export class InsertUserCase implements IInsertUserUseCase {
             throw new Error("O Telefone do usuário não foi informado ou diferente de string");
         }
 
-        return { name, email, password, phone };
+        try {
+            const userExist = await this.userRepository.getUserByEmail(email);
+
+            if (userExist !== null) {
+                throw new Error("E-mail já cadastrado");
+            }
+
+            this.userRepository.insertUser({ name, email, password, phone });
+            return { name, email, password, phone };
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 }
