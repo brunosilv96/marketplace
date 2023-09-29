@@ -4,24 +4,20 @@ import { HttpRequest, HttpResponse, IController } from "../contracts/IController
 
 export class InsertUserController implements IController {
     userUseCase: IInsertUserUseCase;
-    userRepository: IUserRepository;
 
-    constructor(insertUserCase: IInsertUserUseCase, insertUserRepository: IUserRepository) {
+    constructor(insertUserCase: IInsertUserUseCase) {
         this.userUseCase = insertUserCase;
-        this.userRepository = insertUserRepository;
     }
 
     async run({ body }: HttpRequest): Promise<HttpResponse> {
         try {
             const { name, email, password, phone } = body;
 
-            const newUser = this.userUseCase.exec({ name, email, password, phone });
-
-            const newUserDb = await this.userRepository.insert(newUser);
+            const newUser = await this.userUseCase.exec({ name, email, password, phone });
 
             return {
                 code: 201,
-                data: newUserDb,
+                data: newUser,
             };
         } catch (error: any) {
             return {
